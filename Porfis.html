@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pregunta Interactiva</title>
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    background: #ffc0d0; /* fondo rosado */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+  }
+  .card {
+    max-width: 360px;
+    width: 100%;
+    background: linear-gradient(180deg, #fff8ff, #fff0fb);
+    border-radius: 18px;
+    padding: 28px 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  h1 {font-size: 1.4rem; margin: 0 0 10px; color: #3b004d}
+  .emoji {font-size: 2.6rem; margin-bottom: 10px}
+  .controls {display: flex; gap: 12px; justify-content: center; margin-top: 18px}
+  button {flex: 1; padding: 10px 12px; border-radius: 12px; border: none; font-weight: 700; cursor: pointer; font-size: 1rem}
+  .btn-yes {background: #7ee7b6; color: #034b1a}
+  .btn-no {background: #ff9aa2; color: #5b0000}
+  .row {display: flex; gap: 12px}
+  .row .btn {flex: 1}
+  .fade {transition: transform .25s ease, opacity .25s ease}
+  .hidden {opacity: 0; transform: translateY(8px); pointer-events: none; height: 0; overflow: hidden}
+</style>
+</head>
+<body>
+<div class="card" id="step1">
+  <h1>¿Me perdonas?</h1>
+  <div class="emoji">🥺</div>
+  <div class="controls">
+    <button class="btn btn-yes" id="btn-si">Sí</button>
+    <button class="btn btn-no" id="btn-no">No</button>
+  </div>
+</div>
+
+<div class="card hidden" id="step2">
+  <h1>¿Por qué?</h1>
+  <div class="emoji">🤔</div>
+  <div class="row">
+    <button class="btn btn-yes" id="btn-perdono">Dale, te perdono</button>
+    <button class="btn btn-no" id="btn-porque">Porque no 😢</button>
+  </div>
+</div>
+
+<div class="card hidden" id="final">
+  <h1 id="final-title"></h1>
+  <div class="emoji" id="final-emoji"></div>
+</div>
+
+<script>
+  const step1 = document.getElementById('step1');
+  const step2 = document.getElementById('step2');
+  const final = document.getElementById('final');
+
+  function show(el) { el.classList.remove('hidden'); }
+  function hide(el) { el.classList.add('hidden'); }
+
+  document.getElementById('btn-no').addEventListener('click', () => {
+    hide(step1);
+    show(step2);
+  });
+
+  document.getElementById('btn-si').addEventListener('click', () => {
+    hide(step1);
+    document.getElementById('final-title').textContent = '¡Gracias!';
+    document.getElementById('final-emoji').textContent = '💖';
+    show(final);
+  });
+
+  document.getElementById('btn-perdono').addEventListener('click', () => {
+    hide(step2);
+    document.getElementById('final-title').textContent = 'Me alegra 🙂';
+    document.getElementById('final-emoji').textContent = '😊';
+    show(final);
+  });
+
+  document.getElementById('btn-porque').addEventListener('click', () => {
+    hide(step2);
+    document.getElementById('final-title').textContent = 'Lo siento 😢';
+    document.getElementById('final-emoji').textContent = '😿';
+    show(final);
+  });
+</script>
+</body>
+</html>
